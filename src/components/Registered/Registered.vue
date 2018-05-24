@@ -17,7 +17,7 @@
             <span class="input-group-addon">
               <span class="icon wb-book" aria-hidden="true"></span>
             </span>
-            <input type="text" v-model="companyname" name="companyname" v-validate="'required|zhname'" class="form-control" placeholder="公司名称">
+            <input type="text" v-model="params.companyname" name="companyname" v-validate="'required|zhname'" class="form-control" placeholder="公司名称">
           </div>
           <span class="validate-tip" v-show="errors.has('companyname')">{{ errors.first('companyname')}}</span>
         </div>
@@ -26,7 +26,7 @@
             <span class="input-group-addon">
               <span class="icon wb-user" aria-hidden="true"></span>
             </span>
-            <input type="text" v-model="username" name="username" v-validate="'required|email'" class="form-control" placeholder="用户名">
+            <input type="text" v-model="params.username" name="username" v-validate="'required|email'" class="form-control" placeholder="用户名">
           </div>
           <span class="validate-tip" v-show="errors.has('username')">{{ errors.first('username')}}</span>
         </div>
@@ -35,7 +35,7 @@
                 <span class="input-group-addon">
                   <span class="icon wb-lock" aria-hidden="true"></span>
                 </span>
-                <input type="password" name="userpwd" v-validate="'required|password'" v-model="userpwd"  class="form-control" placeholder="密码">
+                <input type="password" name="userpwd" v-validate="'required|password'" v-model="params.userpwd"  class="form-control" placeholder="密码">
                 </div>
                 <span class="validate-tip" v-show="errors.has('userpwd')">{{ errors.first('userpwd')}}</span>
             </div>
@@ -75,9 +75,7 @@ export default {
   },
   data() {
     return {
-      username:"",
-      userpwd: "",
-      companyname:""
+ 
     };
   },
   methods: {

@@ -105,10 +105,11 @@ export default {
     showModal() {
       let modalOptions = {
         componentName: RegisteredComponent,
-        save: function(params) {
-           debugger;
+        save: (params, close) => {
+          debugger;
           //用户注册
-          BusinesService.Registered(params);
+          BusinesService.Registered(params,close);
+          
         },
         params: { username: "", userpwd: "", companyname: "" }
       };
@@ -125,7 +126,7 @@ export default {
       };
       BusinesService.Login(params);
     }
-   }
+  }
 };
 </script>
 

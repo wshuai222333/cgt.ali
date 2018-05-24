@@ -20,6 +20,7 @@ const config = {
 };
 export default {
     LoadValidator() {
+        Vue.use(VeeValidate, config);
         Validator.localize({
             zh_CN: {
                 messages: {
@@ -71,6 +72,6 @@ export default {
                 return document.getElementsByName("userpwd")[0].value === value;
             }
         });
-        Vue.use(VeeValidate, config);
+
     }
 }
