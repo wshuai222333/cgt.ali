@@ -1,12 +1,8 @@
-import {
-  Validator
+import Vue from 'vue'
+import VeeValidate, {
+    Validator
 } from 'vee-validate';
-
-export default {
-  /** 
-   * 基本配置
-   */
-  config: {
+const config = {
     aria: true,
     classNames: {},
     classes: false,
@@ -21,42 +17,59 @@ export default {
     locale: 'zh_CN',
     strict: true,
     validity: false,
-  },
-  /**
-   * 验证字段是否为空
-   */
-  isNullValidate: () => {
-    Validator.localize({
-      zh_CN: {
-        messages: {
-          required: function (name) {
-            return document.getElementsByName(name)[0].title + "不能为空！";
-          }
-        }
-      }
-    });
-  },
-  /**
-   * 邮箱验证
-   */
-  emailValidate: () => {
-    Validator.extend('email', {
-      getMessage: () => {
-        return "邮箱格式不正确！";
-      },
-      validate: (value) => {
-        return /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/.test(value);
-      }
-    });
-  },
-  phoneValidate: () => {
-    Validator.extend('phone', {
-      getMessage: () => {
-        return "手机号格式不正确！";
-      },
-      validate: (value) => {
-        return value.length == 11 && /^((13|14|15|17|18)[0-9]{1}\d{8})$/.test(value);
-      }
-    });
-  }
+};
+export default {
+    LoadValidator() {
+        Vue.use(VeeValidate, config);
+        Validator.localize({
+            zh_CN: {
+                messages: {
+                    required: function(name) {
+                        return "*" + document.getElementsByName(name)[0].placeholder + "不能为空！";
+                    },
+
+                }
+            }
+        });
+        Validator.extend('name', {
+            getMessage: function() {
+                return " 请输入正确格式的name号"
+            },
+            validate: function(value) {
+                return value === "fukaihang";
+            }
+        });
+        Validator.extend('email', {
+            getMessage: function() {
+                return "*邮箱格式无效！"
+            },
+            validate: function(value) {
+                return /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(value);
+            }
+        });
+        Validator.extend('zhname', {
+            getMessage: function() {
+                return "*中文名称无效！"
+            },
+            validate: function(value) {
+                return /[\u4e00-\u9fa5]/.test(value);
+            }
+        });
+        Validator.extend('password', {
+            getMessage: function() {
+                return "*密码6-16位！"
+            },
+            validate: function(value) {
+                return /^\d{6,16}$/.test(value);
+            }
+        });
+        Validator.extend('password2', {
+            getMessage: function() {
+                return "*密码输入不一致！"
+            },
+            validate: function(value) {
+                return document.getElementsByName("userpwd")[0].value === value;
+            }
+        });
+    }
 }
