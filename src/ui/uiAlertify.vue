@@ -31,9 +31,9 @@ export default {
     showModal() {
       let modalOptions = {
         componentName: AddComponent,
-        save: function(params) {
-
-          alert(JSON.stringify(params));
+        save: (params, close) => {
+          this.demos(params, close);
+          //alert(JSON.stringify(params));
         },
         params: { OrderId: "7842091401806", Status: 1, IsShow: 1 }
       };
@@ -43,7 +43,7 @@ export default {
       let modalOptions = {
         componentName: AddToComponent,
         save: function(params) {
-          alert(JSON.stringify(params)+"1");
+          alert(JSON.stringify(params) + "1");
         },
         params: { OrderId: "订单号", Status: 1, IsShow: 1 }
       };
@@ -56,6 +56,9 @@ export default {
       this.$alert("全局alert");
     },
     save(params) {
+      console.log(params);
+    },
+    demos(params, close) {
       console.log(params);
     }
   }

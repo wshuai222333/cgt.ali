@@ -39,7 +39,7 @@ export default {
         message: "默认内容",
         componentName: null,
         params: {},
-        save: function(params) {}
+        save: (params, close) => {}
       }
     };
   },
@@ -48,8 +48,7 @@ export default {
       this.show = !this.show;
     },
     btnSave() {
-      this.modalOptions.save(this.modalOptions.params);
-      this.btnClose();
+      this.modalOptions.save(this.modalOptions.params, this.btnClose);
     }
   },
   computed: {},
