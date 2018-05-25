@@ -44,6 +44,7 @@ export default {
      * @param {*} falg true为coreApi加密  false为manageApi加密
      */
     DataEncryption(model, flag = true) {
+        debugger;
         let rnd_aeskey = this.GenerateAESKey();
 
         model.Ip = "167.0.12.31";
@@ -122,13 +123,14 @@ export default {
      * 生成16位AES - KEY
      */
     GenerateAESKey() {
-        let keyLength = process.env.KEY.length;
+        let KEY = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+        let keyLength = KEY.length;
         let m = 0;
         let n = keyLength - 1;
         let str = "";
         for (let index = 0; index < 16; index++) {
             let ran = Math.random() * (n - m) + m;
-            str = str + process.env.KEY[parseInt(ran.toString())];
+            str = str + KEY[parseInt(ran.toString())];
         }
         return str;
     },
