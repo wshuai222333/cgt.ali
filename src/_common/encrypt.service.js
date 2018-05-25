@@ -1,4 +1,4 @@
-import CryptoJs from "crypto-js";
+import CryptoJS from "crypto-js";
 import JSEncrypt from "jsencrypt";
 /**
  * EncryptService
@@ -71,7 +71,7 @@ export default {
      */
     GetSign(MerchantId, TimesTamp, Ip, Mac) {
         let jsonData = 'MerchantId=' + MerchantId + "&TimesTamp=" + TimesTamp + "&Ip=" + Ip + "&Mac=" + Mac + process.env.USER_KEY;
-        let sign = CryptoJs.MD5(jsonData) + "";
+        let sign = CryptoJS.MD5(jsonData) + "";
         return sign.toUpperCase();
     },
     /**

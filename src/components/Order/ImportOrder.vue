@@ -65,12 +65,47 @@
 import UtilService from "@/_common/util.service";
 import EnumService from "@/_common/enum.service";
 import BusinesService from "@/_common/busines.service";
+import Service from "@/_common/index";
 export default {
   name: "ImportOrderComponent",
   data() {
     return {
       fileList: [],
-      fileNames: ""
+      fileNames: "",
+      datas: [
+        {
+          value: "1",
+          label: "资源",
+          children: [
+            {
+              value: "2",
+              label: "资源",
+              children: [
+                {
+                  value: "3",
+                  label: "资源"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          value: "4",
+          label: "资源",
+          children: [
+            {
+              value: "5",
+              label: "资源",
+              children: [
+                {
+                  value: "6",
+                  label: "资源"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     };
   },
   methods: {
@@ -89,16 +124,24 @@ export default {
       /**
        * 添加表单数据
        */
-      let userData = UtilService.GetLocalStorage(EnumService.CGT_ALI_USER);
+      let userData = Service.Util.GetLocalStorage(Service.Enum.CGT_ALI_USER);
+      let params = {
+        UserId: "3291",
+        UserName: "fukaihang"
+      };
       let formData = new FormData();
-      formData.append("UserName", userData[0].UserName);
-      formData.append("file", this.fileNames);
+      formData.append("formData", JSON.stringify(params));
+      formData.append("File", this.fileList[0]);
 
-      console.log(formData);
-      BusinesService.ImportOrder(formData).then(response => {
-        let data = response;
-        debugger;
-      });
+      let config = {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+      };
+
+      this.$http
+        .post("/api/ali/Order/ImportOrder", formData, config)
+        .then(response => {}, error => {});
     }
   }
 };

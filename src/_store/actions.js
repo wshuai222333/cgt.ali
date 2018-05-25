@@ -1,3 +1,4 @@
+import Vue from 'vue'
 import MutationType from "./mutation-type";
 import BusinesService from "@/_common/busines.service";
 /**
@@ -11,7 +12,7 @@ export default {
         commit(MutationType.SET_AGE, age);
     },
     sidebarListAsyn: ({ commit }) => {
-        BusinesService.GetSidebarList({}).then(function(response) {
+        Vue.http.get('/static/data/sidebarList.json').then(response=>{
             if (
                 response.data &&
                 response.data != '' &&

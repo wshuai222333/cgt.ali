@@ -22,13 +22,10 @@ export default {
      */
     axios.interceptors.request.use(
       config => {
-        //console.log("request:" + JSON.stringify(config));
         return config;
       },
       error => {
         Vue.tip("request:" + error);
-        //console.log("request:" + err);
-        return Promise.reject(err);
       }
     );
     /** 
@@ -52,11 +49,9 @@ export default {
               break;
           }
         }
-        //console.log("response:" + error);
         Vue.tip("response:" + error);
-        return Promise.reject("response:" + error);
       }
     );
-    Vue.prototype.$http = axios;
+    Vue.http = Vue.prototype.$http = axios;
   }
 }

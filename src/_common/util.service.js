@@ -16,6 +16,7 @@ export default {
    * @param key 键
    */
   GetLocalStorage(key) {
+    debugger;
     return localStorage.getItem(key);
   },
   /**
