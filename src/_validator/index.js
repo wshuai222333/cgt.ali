@@ -31,15 +31,6 @@ export default {
                 }
             }
         });
-
-        Validator.extend('name', {
-            getMessage: function() {
-                return " 请输入正确格式的name号"
-            },
-            validate: function(value) {
-                return value === "fukaihang";
-            }
-        });
         Validator.extend('email', {
             getMessage: function() {
                 return "*邮箱格式无效！"

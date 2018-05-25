@@ -37,8 +37,8 @@
 
                 <div class="form-group has-feedback has-success">
                   <label class="sr-only" for="userName">用户名</label>
-                  <input type="text" class="form-control" title="用户名" id="userName" name="userName" v-model="userName" v-validate="'required|name'" placeholder="用户名">
-                  <span v-show="errors.has('userName')">{{ errors.first('userName')}}</span>
+                  <input type="text" class="form-control" title="用户名" id="userName" name="userName" v-model="userName" v-validate="'required|email'" placeholder="用户名">
+                  <span style="color:Red" v-show="errors.has('userName')">{{ errors.first('userName')}}</span>
                 </div>
 
                 <div class="form-group has-feedback has-success">
@@ -97,8 +97,8 @@ export default {
   name: "LoginComponent",
   data() {
     return {
-      userName: "fukaihang",
-      userPwd: "fukaihang",
+      userName: "wshuai@qq.com",
+      userPwd: "123456",
       userCode: ""
     };
   },
@@ -107,33 +107,37 @@ export default {
       let modalOptions = {
         componentName: RegisteredComponent,
         save: (params, close) => {
-          debugger;
           //用户注册
-          this.$http.post("/api/boss/User/RegisteredUser", EncryptService.DataEncryption(params)).then(
-            response => {
-              debugger;
-              if (
-                response.data &&
-                response.data != null &&
-                response.data != undefined
-              ) {
-                if (response.data > 0) {
-                  Vue.tip("注册成功！");
-                   close();
-                  // setTimeout(() => {
-                  //   window.location.href = "/login";
-                  // }, 1500);
+          this.$http
+            .post(
+              "/api/boss/User/RegisteredUser",
+              EncryptService.DataEncryption(params)
+            )
+            .then(
+              response => {
+                debugger;
+                if (
+                  response.data &&
+                  response.data != null &&
+                  response.data != undefined &&
+                  response.data.Status == 100
+                ) {
+                  if (response.data.Data > 0) {
+                    this.$tip("注册成功！");
+                    setTimeout(() => {
+                      close();
+                    }, 2000);
+                  } else {
+                    this.$tip("注册失败！");
+                  }
                 } else {
-                  Vue.tip("用户已存在！");
+                  this.$tip(response.data.Message);
                 }
-              } else {
-                Vue.tip("注册失败！");
+              },
+              error => {
+                console.log(error);
               }
-            },
-            error => {
-              console.log(error);
-            }
-          );
+            );
         },
         params: { username: "", userpwd: "", companyname: "" }
       };
@@ -148,31 +152,27 @@ export default {
         UserPwd: this.userPwd,
         UserCode: this.userCode
       };
-      this.$http.get("/static/data/userList.json", params).then(
+      this.$http.post("/api/boss/User/UserLogin", EncryptService.DataEncryption(params)).then(
         response => {
           if (
             response.data &&
             response.data != null &&
             response.data != undefined
-          ) {
-            response.data.forEach(item => {
-              if (
-                item.UserName === params.UserName &&
-                item.UserPwd === params.UserPwd
-              ) {
-                UtilService.SetLocalStorage(Enumservice.CGT_ALI_USER, "");
-                UtilService.SetLocalStorage(
-                  Enumservice.CGT_ALI_USER,
-                  JSON.stringify(item)
-                );
-              }
-            });
-            this.$tip("登录成功！");
-            setTimeout(() => {
-              window.location.href = "/";
-            }, 1500);
+            ) {
+            debugger;
+            if (response.data.Status == 100) {
+              UtilService.SetLocalStorage(Enumservice.CGT_ALI_USER, "");
+              UtilService.SetLocalStorage(
+                Enumservice.CGT_ALI_USER,
+                JSON.stringify(response.data.Data)
+              );
+              this.$tip("登录成功！");
+              setTimeout(() => {
+                window.location.href = "/";
+              }, 1500);
+            }
           } else {
-            this.$tip("用户不存在或已注销！");
+            this.$tip(response.data.Message);
           }
         },
         error => {

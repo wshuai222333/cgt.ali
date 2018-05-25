@@ -44,7 +44,7 @@ export default {
      * @param {*} falg true为coreApi加密  false为manageApi加密
      */
     DataEncryption(model, flag = true) {
-        debugger;
+
         let rnd_aeskey = this.GenerateAESKey();
 
         model.MerchantId = process.env.MERCHANT_ID;
