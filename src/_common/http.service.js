@@ -1,5 +1,5 @@
 import InterceptorService from "./interceptor.service";
-let axios = InterceptorService.axios();
+let axios = InterceptorService.LoadAxios();
 /**
  * HttpService
  * 请求服务

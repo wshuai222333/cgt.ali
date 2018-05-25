@@ -118,6 +118,6 @@ const router = new Router({
 });
 
 //路由守卫，登录验证
-//AuthService.loginAuth(router, routers);
+AuthService.loginAuth(router, routers);
 
 export default router;

@@ -71,6 +71,7 @@ export default {
         return http.get('/static/data/sidebarList.json', params);
     },
     ImportOrder(params) {
+        this.$http();
         return http.post('http://localhost:5002/api/ali/Order/ImportOrder', params);
     }
 }

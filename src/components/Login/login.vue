@@ -89,9 +89,9 @@
 </template>
 
 <script>
-import BusinesService from "@/_common/busines.service";
+import UtilService from "@/_common/util.service";
+import Enumservice from "@/_common/enum.service";
 import RegisteredComponent from "../Registered/Registered.vue";
-
 export default {
   name: "LoginComponent",
   data() {
@@ -108,8 +108,7 @@ export default {
         save: (params, close) => {
           debugger;
           //用户注册
-          BusinesService.Registered(params,close);
-          
+          BusinesService.Registered(params, close);
         },
         params: { username: "", userpwd: "", companyname: "" }
       };
@@ -124,7 +123,37 @@ export default {
         UserPwd: this.userPwd,
         UserCode: this.userCode
       };
-      BusinesService.Login(params);
+      this.$http.post("/api/ali/Order/ImportOrder", params).then(
+        response => {
+          if (
+            response.data &&
+            response.data != null &&
+            response.data != undefined
+          ) {
+            response.data.forEach(item => {
+              if (
+                item.UserName === params.UserName &&
+                item.UserPwd === params.UserPwd
+              ) {
+                UtilService.SetLocalStorage(Enumservice.CGT_ALI_USER, "");
+                UtilService.SetLocalStorage(
+                  Enumservice.CGT_ALI_USER,
+                  JSON.stringify(item)
+                );
+              }
+            });
+            this.$tip("登录成功！");
+            // setTimeout(() => {
+            //   window.location.href = "/";
+            // }, 1500);
+          } else {
+            this.$tip("用户不存在或已注销！");
+          }
+        },
+        error => {
+          console.log(error);
+        }
+      );
     }
   }
 };

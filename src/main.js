@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import InterceptorService from "@/_common/interceptor.service";
 import Components from "@/_components/index";
 import Directives from "@/_directives/index";
 import Validtor from "@/_validator/index";
@@ -18,6 +19,8 @@ import '@lib/webicons/scss/web-icons.scss';
 import '@lib/themify-icons/themify-icons.css';
 
 Vue.config.productionTip = false
+//http请求
+InterceptorService.LoadAxios();
 //全局组件
 Components.LoadComponets();
 //全局指令
