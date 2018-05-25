@@ -29,7 +29,7 @@ import HeaderComponent from "./header";
 import SidebarComponent from "./sidebar";
 import FooterComponent from "./footer";
 import { mapGetters, mapState, mapMutations, mapActions } from "vuex";
-import ElementService from "@/_common/element.service";
+import Service from "@/_common/index";
 
 export default {
   name: "SharedComponent",
@@ -40,7 +40,7 @@ export default {
   },
   methods: {
     contentToggle($event) {
-      ElementService.contentToggle($event, this.sidebarList);
+      Service.Element.contentToggle($event, this.sidebarList);
     }
   },
   computed: {

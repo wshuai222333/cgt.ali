@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import MutationType from "./mutation-type";
-import BusinesService from "@/_common/busines.service";
 /**
  * actions 异步操作、多个commit时
  * 和mutations类似。不过actions支持异步操作。

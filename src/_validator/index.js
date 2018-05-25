@@ -2,6 +2,9 @@ import Vue from 'vue'
 import VeeValidate, {
     Validator
 } from 'vee-validate';
+/**
+ * 验证配置
+ */
 const config = {
     aria: true,
     classNames: {},
@@ -18,6 +21,9 @@ const config = {
     strict: true,
     validity: false,
 };
+/** 
+ * 表单验证
+ */
 export default {
     LoadValidator() {
         Vue.use(VeeValidate, config);

@@ -3,7 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import InterceptorService from "@/_common/interceptor.service";
+import Service from "@/_common/index";
 import Components from "@/_components/index";
 import Directives from "@/_directives/index";
 import Validtor from "@/_validator/index";
@@ -20,7 +20,7 @@ import '@lib/themify-icons/themify-icons.css';
 
 Vue.config.productionTip = false
 //http请求
-InterceptorService.LoadAxios();
+Service.Interceptor.LoadAxios();
 //全局组件
 Components.LoadComponets();
 //全局指令
