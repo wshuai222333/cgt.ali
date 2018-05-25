@@ -5,8 +5,7 @@
 </template>
 
 <script>
-import UtilService from "@/_common/util.service";
-import EnumService from "@/_common/enum.service";
+import Service from "@/_common/index";
 export default {
   name: "IdentifyComponent",
   props: {
@@ -110,10 +109,10 @@ export default {
       for (let index = 0; index < 4; index++) {
         identifyCode += this.keys[this.randomNum(0, this.keys.length)];
       }
-      if(UtilService.IsExistLocalStorage(EnumService.CGT_IDENTIFY_CODE)){
-          UtilService.RemoveLocalStorage(EnumService.CGT_IDENTIFY_CODE);
+      if(Service.Util.IsExistLocalStorage(Service.Enum.CGT_IDENTIFY_CODE)){
+          Service.Util.RemoveLocalStorage(Service.Enum.CGT_IDENTIFY_CODE);
       }
-      UtilService.SetLocalStorage(EnumService.CGT_IDENTIFY_CODE,identifyCode.toUpperCase());
+      Service.Util.SetLocalStorage(Service.Enum.CGT_IDENTIFY_CODE,identifyCode.toUpperCase());
       return identifyCode;
     },
     /**

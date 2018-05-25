@@ -52,21 +52,19 @@
 </template>
 
 <script>
-import ElementService from "@/_common/element.service";
-import BusinesService from "@/_common/busines.service";
+import Service from "@/_common/index";
 export default {
   name: "HeaderComponent",
   data() {
-    return {
-      
-    };
+    return {};
   },
   methods: {
     outLogin() {
-      BusinesService.LoginOut(this.$router);
+      Service.Util.RemoveLocalStorage(Service.Enums.CGT_ALI_USER);
+      this.$router.push("/login");
     },
     sidebarToggle($event) {
-      ElementService.sidebarToggle($event);
+      Service.Element.sidebarToggle($event);
     }
   }
 };

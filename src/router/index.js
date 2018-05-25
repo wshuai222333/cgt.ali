@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router';
-import AuthService from "@/_common/auth.service";
+import Service from "@/_common/index";
 
 const debug = process.env.NODE_ENV !== 'production';
 
@@ -118,6 +118,6 @@ const router = new Router({
 });
 
 //路由守卫，登录验证
-AuthService.loginAuth(router, routers);
+Service.Auth.loginAuth(router, routers);
 
 export default router;
