@@ -47,6 +47,7 @@ export default {
         debugger;
         let rnd_aeskey = this.GenerateAESKey();
 
+        model.MerchantId = process.env.MERCHANT_ID;
         model.Ip = "167.0.12.31";
         model.Mac = "00-15-5D-7E-36-5B";
         model.IsValid = true;
