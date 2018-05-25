@@ -63,6 +63,5 @@ export default {
                 return document.getElementsByName("userpwd")[0].value === value;
             }
         });
-
     }
 }

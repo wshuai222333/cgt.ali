@@ -89,9 +89,7 @@
 </template>
 
 <script>
-import UtilService from "@/_common/util.service";
-import Enumservice from "@/_common/enum.service";
-import EncryptService from "@/_common/encrypt.service";
+import Service from "@/_common";
 import RegisteredComponent from "../Registered/Registered.vue";
 export default {
   name: "LoginComponent",
@@ -110,8 +108,8 @@ export default {
           //用户注册
           this.$http
             .post(
-              "/api/boss/User/RegisteredUser",
-              EncryptService.DataEncryption(params)
+              "/api/ali/User/RegisteredUser",
+              Service.Encrypt.DataEncryption(params)
             )
             .then(
               response => {
@@ -152,7 +150,7 @@ export default {
         UserPwd: this.userPwd,
         UserCode: this.userCode
       };
-      this.$http.post("/api/boss/User/UserLogin", EncryptService.DataEncryption(params)).then(
+      this.$http.post("/api/ali/User/UserLogin", Service.Encrypt.DataEncryption(params)).then(
         response => {
           if (
             response.data &&
@@ -161,9 +159,10 @@ export default {
             ) {
             debugger;
             if (response.data.Status == 100) {
-              UtilService.SetLocalStorage(Enumservice.CGT_ALI_USER, "");
-              UtilService.SetLocalStorage(
-                Enumservice.CGT_ALI_USER,
+              response.data.Data.userPwd=null;
+              Service.Util.SetLocalStorage(Service.Enum.CGT_ALI_USER, "");
+              Service.Util.SetLocalStorage(
+                Service.Enum.CGT_ALI_USER,
                 JSON.stringify(response.data.Data)
               );
               this.$tip("登录成功！");
