@@ -14,6 +14,7 @@ export default {
      * 它可以通过设置一个 `baseURL` 便于为 axios 实例的方法传递相对 URL
      */
     axios.defaults.timeout = 50000;
+    //process.env.NODE_ENV="";
     axios.defaults.baseURL = "";
     /** 
      * 请求拦截

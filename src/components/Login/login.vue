@@ -91,6 +91,7 @@
 <script>
 import UtilService from "@/_common/util.service";
 import Enumservice from "@/_common/enum.service";
+import EncryptService from "@/_common/encrypt.service";
 import RegisteredComponent from "../Registered/Registered.vue";
 export default {
   name: "LoginComponent",
@@ -108,7 +109,7 @@ export default {
         save: (params, close) => {
           debugger;
           //用户注册
-          this.$http.post("/api/boss/User/RegisteredUser", params).then(
+          this.$http.post("/api/boss/User/RegisteredUser", EncryptService.DataEncryption(params)).then(
             response => {
               debugger;
               if (
@@ -147,7 +148,7 @@ export default {
         UserPwd: this.userPwd,
         UserCode: this.userCode
       };
-      this.$http.post("/api/ali/Order/ImportOrder", params).then(
+      this.$http.get("/static/data/userList.json", params).then(
         response => {
           if (
             response.data &&
@@ -167,9 +168,9 @@ export default {
               }
             });
             this.$tip("登录成功！");
-            // setTimeout(() => {
-            //   window.location.href = "/";
-            // }, 1500);
+            setTimeout(() => {
+              window.location.href = "/";
+            }, 1500);
           } else {
             this.$tip("用户不存在或已注销！");
           }
