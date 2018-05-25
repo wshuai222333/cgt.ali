@@ -10,7 +10,7 @@ export default {
    * @param {*} model 请求实体
    * @param {*} falg true为coreApi加密  false为manageApi加密
    */
-  DataEncryption(model, falg) {
+  DataRSAEncryption(model, falg = true) {
     let encryptionModel = {
       MerchantId: null,
       Data: null,
@@ -38,6 +38,28 @@ export default {
     encryptionModel.EncryptKey = this.RSAEncrypt(rnd_aeskey);
 
     return encryptionModel;
+  },
+  /**
+   * 明参实体加密
+   * @param {*} model 请求实体
+   * @param {*} falg true为coreApi加密  false为manageApi加密
+   */
+  DataEncryption(model, flag = true) {
+    let rnd_aeskey = this.GenerateAESKey();
+
+    model.Ip = "167.0.12.31";
+    model.Mac = "00-15-5D-7E-36-5B";
+    model.IsValid = true;
+    model.Version = "1.0.0";
+    model.TimesTamp = this.GetTimesTamp();
+    model.Sign = null;
+    if (flag) {
+      model.Sign = this.GetSign(process.env.MERCHANT_ID, model.TimesTamp, model.Ip, model.Mac);
+    } else {
+      model.Sign = (CryptoJS.MD5(JSON.stringify(model) + process.env.USER_KEY) + "").toUpperCase();
+    }
+
+    return model;
   },
   /**
    * 获取Md5加密sign值
