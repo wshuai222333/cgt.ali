@@ -108,7 +108,31 @@ export default {
         save: (params, close) => {
           debugger;
           //用户注册
-          BusinesService.Registered(params, close);
+          this.$http.post("/api/boss/User/RegisteredUser", params).then(
+            response => {
+              debugger;
+              if (
+                response.data &&
+                response.data != null &&
+                response.data != undefined
+              ) {
+                if (response.data > 0) {
+                  Vue.tip("注册成功！");
+                   close();
+                  // setTimeout(() => {
+                  //   window.location.href = "/login";
+                  // }, 1500);
+                } else {
+                  Vue.tip("用户已存在！");
+                }
+              } else {
+                Vue.tip("注册失败！");
+              }
+            },
+            error => {
+              console.log(error);
+            }
+          );
         },
         params: { username: "", userpwd: "", companyname: "" }
       };

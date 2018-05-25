@@ -51,9 +51,10 @@ export default {
             if (response.data && response.data != null && response.data != undefined) {
                 if (response.data > 0) {
                     Vue.tip("注册成功！");
-                    setTimeout(() => {
-                        window.location.href = "/login";
-                    }, 1500);
+                    close();
+                    // setTimeout(() => {
+                    //     window.location.href = "/login";
+                    // }, 1500);
                 } else {
                     Vue.tip("用户已存在！");
                 }

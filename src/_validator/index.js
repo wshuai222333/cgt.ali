@@ -25,9 +25,9 @@ export default {
             zh_CN: {
                 messages: {
                     required: function(name) {
-                        return "*" + document.getElementsByName(name)[0].placeholder + "不能为空！";
+                        // return "*" + document.getElementsByName(name)[0].placeholder + "不能为空！";
+                        return "*不能为空！"
                     },
-
                 }
             }
         });
