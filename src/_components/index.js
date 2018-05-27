@@ -4,6 +4,7 @@ import CustomModal from "./customModal/index";
 import Tip from "./tip/index";
 import Alert from "./alert/index";
 import Identify from "./identify/index";
+import Upload from "./upload/index";
 
 export default {
   LoadComponets() {
@@ -14,5 +15,6 @@ export default {
     Vue.use(Alert);
     //Components
     Vue.use(Identify);
+    Vue.use(Upload);
   }
 }

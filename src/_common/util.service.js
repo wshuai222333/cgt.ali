@@ -1,3 +1,4 @@
+import EnumService from "./enum.service";
 /**
  *  UtilService
  *  工具类
@@ -16,7 +17,11 @@ export default {
    * @param key 键
    */
   GetLocalStorage(key) {
-    return localStorage.getItem(key);
+    if (key === EnumService.CGT_ALI_USER) {
+      return JSON.parse(localStorage.getItem(key));
+    } else {
+      return localStorage.getItem(key);
+    }
   },
   /**
    * 通过键删除本地存储

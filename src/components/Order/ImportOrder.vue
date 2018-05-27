@@ -18,17 +18,7 @@
                         <div class="col-sm-12 col-md-12">
                             <div class="example-wrap">
                                 <h4 class="example-title">数据上传</h4>
-                                <div class="form-group">
-                                    <div class="input-group input-group-file">
-                                        <input type="text" class="form-control" name="fileNames" v-model="fileNames" disabled placeholder="请选择文件..." />
-                                        <span class="input-group-btn">
-                                            <span class="btn btn-success btn-file">
-                                                <i class="icon wb-upload" aria-hidden="true"></i>
-                                                <input type="file" name="OrderFile" id="OrderFile" @change="getOrderFile($event);" />
-                                            </span>
-                                        </span>
-                                    </div>
-                                </div>
+                                <ad-upload :params="uploadParams.params" :url="uploadParams.url" :isMultiple="true" :uploadCallback="uploadResponse" :beforeCallback="uploadBefore"></ad-upload>
                             </div>
                         </div>
                         <hr>
@@ -67,78 +57,34 @@ export default {
   name: "ImportOrderComponent",
   data() {
     return {
-      fileList: [],
-      fileNames: "",
-      datas: [
-        {
-          value: "1",
-          label: "资源",
-          children: [
-            {
-              value: "2",
-              label: "资源",
-              children: [
-                {
-                  value: "3",
-                  label: "资源"
-                }
-              ]
-            }
-          ]
+      uploadParams: {
+        params: {
+          UserName: this.getUser().UserName,
+          Type: 1,
         },
-        {
-          value: "4",
-          label: "资源",
-          children: [
-            {
-              value: "5",
-              label: "资源",
-              children: [
-                {
-                  value: "6",
-                  label: "资源"
-                }
-              ]
-            }
-          ]
-        }
-      ]
+        url: "/api/ali/Order/ImportOrder"
+      }
     };
   },
   methods: {
-    getOrderFile($event) {
-      /**
-       * 获取文件信息
-       */
-      let files = $event.target.files;
-      let filesLength = files.length;
-      for (let index = 0; index < filesLength; index++) {
-        const file = files[index];
-        if (this.fileNames != "") this.fileNames += ",";
-        this.fileNames += file.name;
-        this.fileList.push(file);
-      }
-      /**
-       * 添加表单数据
-       */
-      let userData = Service.Util.GetLocalStorage(Service.Enum.CGT_ALI_USER);
-      let params = {
-        UserId: "3291",
-        UserName: "fukaihang"
-      };
-      let formData = new FormData();
-      formData.append("formData", JSON.stringify(params));
-      formData.append("File", this.fileList[0]);
-
-      let config = {
-        headers: {
-          "Content-Type": "multipart/form-data"
-        }
-      };
-
-      this.$http
-        .post("/api/ali/Order/ImportOrder", formData, config)
-        .then(response => {}, error => {});
+    /**
+     * 文件上传前，可以对文件做验证或者其他操作
+     * @param files 文件信息
+     * return bool
+     */
+    uploadBefore(files) {
+      console.log(files);
+      return true;
+    },
+    /**
+     * 文件上传返回结果
+     * @param response 响应结果
+     */
+    uploadResponse(response) {
+      console.log(response);
+    },
+    getUser() {
+      return Service.Util.GetLocalStorage(Service.Enum.CGT_ALI_USER);
     }
   }
 };
