@@ -115,7 +115,7 @@ export default {
                 break;
             }
           }
-          message += "：" + error.response.data;
+          message += ":" + error.response.data;
           console.log(message);
           Vue.tip("response:" + message);
           return Promise.reject(error);
