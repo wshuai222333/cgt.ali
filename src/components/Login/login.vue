@@ -157,7 +157,7 @@ export default {
             response.data != null &&
             response.data != undefined
             ) {
-            debugger;
+            
             if (response.data.Status == 100) {
               response.data.Data.userPwd=null;
               Service.Util.SetLocalStorage(Service.Enum.CGT_ALI_USER, "");

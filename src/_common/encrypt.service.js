@@ -133,6 +133,7 @@ export default {
             let ran = Math.random() * (n - m) + m;
             str = str + KEY[parseInt(ran.toString())];
         }
+
         return str;
     },
     /**
