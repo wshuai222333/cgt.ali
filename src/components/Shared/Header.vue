@@ -60,7 +60,7 @@ export default {
   },
   methods: {
     outLogin() {
-      Service.Util.RemoveLocalStorage(Service.Enums.CGT_ALI_USER);
+      Service.Util.RemoveLocalStorage(Service.Enum.CGT_ALI_USER);
       this.$router.push("/login");
     },
     sidebarToggle($event) {

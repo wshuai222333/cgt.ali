@@ -10,18 +10,28 @@
                     <div class="row row-lg">
                         <div class="col-sm-12 col-md-12">
                             <div class="example-wrap">
+                                <h4 class="example-title">模板类型</h4>
+                                <select class="form-control" v-model="uploadParams.params.TemplateType">
+                                    <option :value="-1" :selected="true">--请选择模板类型--</option>
+                                    <option :value="0">机票</option>
+                                </select>
+                            </div>
+                        </div>
+                        <hr style="clear:both" />
+                        <div class="col-sm-12 col-md-12">
+                            <div class="example-wrap">
                                 <h4 class="example-title">模板下载</h4>
                                 <button type="button" class="btn btn-info">差旅机票模板下载</button>
                             </div>
                         </div>
-                        <hr>
+                        <hr style="clear:both" />
                         <div class="col-sm-12 col-md-12">
                             <div class="example-wrap">
                                 <h4 class="example-title">数据上传</h4>
-                                <ad-upload :params="uploadParams.params" :url="uploadParams.url" :isMultiple="true" :uploadCallback="uploadResponse" :beforeCallback="uploadBefore"></ad-upload>
+                                <ad-upload :params="uploadParams.params" :url="uploadParams.url" :isMultiple="false" :uploadCallback="uploadResponse" :beforeCallback="uploadBefore"></ad-upload>
                             </div>
                         </div>
-                        <hr>
+                        <hr style="clear:both" />
                         <div class="col-sm-12 col-md-12">
                             <div class="col-sm-5">
                                 <p class="lead">差旅导入报表格式说明</p>
@@ -59,8 +69,13 @@ export default {
     return {
       uploadParams: {
         params: {
+          UserId: this.getUser().UserId,
           UserName: this.getUser().UserName,
-          Type: 1,
+          UserType: this.getUser().UserType,
+          UserStatus: this.getUser().UserStatus,
+          PayCenterCode: this.getUser().PayCenterCode,
+          UserCompanyName: this.getUser().UserCompanyName,
+          TemplateType: -1
         },
         url: "/api/ali/Order/ImportOrder"
       }
@@ -73,8 +88,12 @@ export default {
      * return bool
      */
     uploadBefore(files) {
-      console.log(files);
-      return true;
+      let result = true;
+      if (this.uploadParams.params.TemplateType === -1) {
+        this.$tip("请选择模板类型！");
+        result = false;
+      }
+      return result;
     },
     /**
      * 文件上传返回结果
@@ -82,6 +101,15 @@ export default {
      */
     uploadResponse(response) {
       console.log(response);
+      //   let data = response.data;
+      //   if (data.Status === 100 || data.Data) {
+      //     this.$tip(data.Message);
+      //   } else {
+      //     this.$tip(data.Message);
+      //     console.log(data.Message);
+      //   }
+      //   this.$tip(data.Message);
+      //   console.log(data.Message);
     },
     getUser() {
       return Service.Util.GetLocalStorage(Service.Enum.CGT_ALI_USER);
