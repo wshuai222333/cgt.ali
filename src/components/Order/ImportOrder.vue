@@ -21,7 +21,7 @@
                         <div class="col-sm-12 col-md-12">
                             <div class="example-wrap">
                                 <h4 class="example-title">模板下载</h4>
-                                <button type="button" class="btn btn-info">差旅机票模板下载</button>
+                                <button type="button" class="btn btn-info" :disabled="disabled" @click="downloadTemplate($event);">差旅机票模板下载</button>
                             </div>
                         </div>
                         <hr style="clear:both" />
@@ -78,7 +78,8 @@ export default {
           TemplateType: -1
         },
         url: "/api/ali/Order/ImportOrder"
-      }
+      },
+      disabled: false
     };
   },
   methods: {
@@ -110,6 +111,20 @@ export default {
       //   }
       //   this.$tip(data.Message);
       //   console.log(data.Message);
+    },
+    downloadTemplate($event) {
+      if (this.uploadParams.params.TemplateType == -1) {
+        this.$tip("请选择模板类型！");
+        return;
+      }
+      this.$http
+        .post(
+          "/api/ali/Order/DownloadOrderTemplate",
+          Service.Encrypt.DataEncryption(this.uploadParams.params)
+        )
+        .then(response => {
+          console.log(response);
+        });
     },
     getUser() {
       return Service.Util.GetLocalStorage(Service.Enum.CGT_ALI_USER);
