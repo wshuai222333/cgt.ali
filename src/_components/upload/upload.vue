@@ -19,42 +19,7 @@ export default {
   props: ["beforeCallback", "uploadCallback", "url", "params", "isMultiple"],
   data() {
     return {
-      fileNames: [],
-      datas: [
-        {
-          value: "1",
-          label: "资源",
-          children: [
-            {
-              value: "2",
-              label: "资源",
-              children: [
-                {
-                  value: "3",
-                  label: "资源"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          value: "4",
-          label: "资源",
-          children: [
-            {
-              value: "5",
-              label: "资源",
-              children: [
-                {
-                  value: "6",
-                  label: "资源"
-                }
-              ]
-            }
-          ]
-        }
-      ],
-      data: []
+      fileNames: []
     };
   },
   methods: {
@@ -103,39 +68,19 @@ export default {
         /**
          * 发送数据到服务端
          */
-        this.$http.post(this.url, formData, config).then(
-          response => {
+        this.$http
+          .post(this.url, formData, config)
+          .then(response => {
             self.uploadCallback(response);
-          },
-          error => {
-            this.$tip(error);
-            console.log(error);
-          }
-        );
+            this.clearUpload();
+          },error=>{
+            this.clearUpload();
+          });
       }
-
-      this.clearUpload();
     },
     clearUpload() {
       this.$refs.uploadFile.value = null;
-    },
-    loadData(arr, level) {
-      let i = 0;
-      arr.forEach(element => {
-        const item = element;
-        if (level == item.value) {
-          item.index = i + 1;
-          this.data.push(item);
-        } else if (item.children !== undefined && item.children.length > 0) {
-          this.loadData(item.children, level);
-        }
-      });
     }
-  },
-  created() {
-    // console.clear();
-    // this.loadData(this.datas, 3);
-    // console.log(this.data);
   }
 };
 </script>

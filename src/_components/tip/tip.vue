@@ -1,6 +1,6 @@
 <template>
     <div v-if="show" class="alertify-logs" @click="btnClose();">
-        <div class="default show">{{message}}</div>
+        <div class="default show" style="text-align:center;">{{message}}</div>
     </div>
 </template>
 
