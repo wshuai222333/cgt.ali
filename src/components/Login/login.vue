@@ -58,7 +58,7 @@
 
                 <div class="form-group clearfix">
                   <div class="checkbox-custom checkbox-inline checkbox-primary pull-left">
-                    <input type="checkbox" id="remember" name="remember">
+                    <input type="checkbox" id="remember" checked="true" name="remember">
                     <label for="remember">自动登录</label>
                   </div>
                   <div class="pull-right">
