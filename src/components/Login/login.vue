@@ -154,7 +154,6 @@ export default {
         .post("/api/ali/User/UserLogin", Service.Encrypt.DataEncryption(params))
         .then(
           response => {
-            debugger;
             if (
               response.data &&
               response.data != null &&
