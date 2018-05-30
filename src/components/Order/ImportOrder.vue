@@ -124,6 +124,27 @@ export default {
         )
         .then(response => {
           console.log(response);
+          let data = response.data;
+          let flag = data && data != null && data != undefined;
+          if (flag || data.Status == 100) {
+            if (data.ErrorCode == "1000") {
+              this.$tip(data.Message);
+            } else {
+              console.log(data.Data);
+              let base = atob(data.Data);
+              let length = base.length;
+              let u8arr = new Uint8Array(length);
+              while (length--) {
+                u8arr[length] = base.charCodeAt(length);
+              }
+              let blob = new Blob([u8arr], {
+                type: "application/vnd.ms-excel"
+              });
+              window.location.href = URL.createObjectURL(blob);
+            }
+          } else {
+            this.$tip(data.Message);
+          }
         });
     },
     getUser() {
