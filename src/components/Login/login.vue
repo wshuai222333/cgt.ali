@@ -106,8 +106,13 @@ export default {
         componentName: RegisteredComponent,
         save: (params, close) => {
           //用户注册
-          this.$http.post("/api/ali/User/RegisteredUser",Service.Encrypt.DataEncryption(params))
-            .then(response => {
+          this.$http
+            .post(
+              "/api/ali/User/RegisteredUser",
+              Service.Encrypt.DataEncryption(params)
+            )
+            .then(
+              response => {
                 if (
                   response.data &&
                   response.data != null &&
@@ -125,7 +130,8 @@ export default {
                 } else {
                   this.$tip(response.data.Message);
                 }
-              },error => {
+              },
+              error => {
                 this.$tip(error);
                 console.log(error);
               }
@@ -144,8 +150,11 @@ export default {
         UserPwd: this.userPwd,
         UserCode: this.userCode
       };
-      this.$http.post("/api/ali/User/UserLogin", Service.Encrypt.DataEncryption(params))
-        .then(response => {
+      this.$http
+        .post("/api/ali/User/UserLogin", Service.Encrypt.DataEncryption(params))
+        .then(
+          response => {
+            debugger;
             if (
               response.data &&
               response.data != null &&
@@ -162,11 +171,14 @@ export default {
                 setTimeout(() => {
                   window.location.href = "/";
                 }, 1500);
+              } else {
+                this.$tip(response.data.Message);
               }
             } else {
               this.$tip(response.data.Message);
             }
-          },error => {
+          },
+          error => {
             this.$tip(error);
             console.log(error);
           }
